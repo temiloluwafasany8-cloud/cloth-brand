@@ -1,0 +1,303 @@
+[
+  {
+    "id": 1,
+    "name": "Signature Hoodie",
+    "price": 55,
+    "image": "/uploads/1777976484745-475682227.jpeg",
+    "colors": [
+      "Black",
+      "White",
+      "Navy",
+      "Gray"
+    ],
+    "sizes": [
+      "Small",
+      "Medium",
+      "Large",
+      "Extra Large"
+    ],
+    "stock": {
+      "Black": {
+        "Small": 10,
+        "Medium": 15,
+        "Large": 20,
+        "Extra Large": 8
+      },
+      "White": {
+        "Small": 12,
+        "Medium": 18,
+        "Large": 22,
+        "Extra Large": 10
+      },
+      "Navy": {
+        "Small": 8,
+        "Medium": 12,
+        "Large": 16,
+        "Extra Large": 6
+      },
+      "Gray": {
+        "Small": 9,
+        "Medium": 14,
+        "Large": 18,
+        "Extra Large": 7
+      }
+    },
+    "totalStock": 205
+  },
+  {
+    "id": 2,
+    "name": "Graphic Tee",
+    "price": 25,
+    "image": "/uploads/1777976484745-475682227.jpeg",
+    "colors": [
+      "White",
+      "Black",
+      "Red",
+      "Blue"
+    ],
+    "sizes": [
+      "Small",
+      "Medium",
+      "Large",
+      "Extra Large"
+    ],
+    "stock": {
+      "White": {
+        "Small": 20,
+        "Medium": 25,
+        "Large": 30,
+        "Extra Large": 15
+      },
+      "Black": {
+        "Small": 18,
+        "Medium": 22,
+        "Large": 28,
+        "Extra Large": 12
+      },
+      "Red": {
+        "Small": 15,
+        "Medium": 20,
+        "Large": 25,
+        "Extra Large": 10
+      },
+      "Blue": {
+        "Small": 16,
+        "Medium": 21,
+        "Large": 26,
+        "Extra Large": 11
+      }
+    },
+    "totalStock": 314
+  },
+  {
+    "id": 3,
+    "name": "Denim Jacket",
+    "price": 85,
+    "image": "/uploads/1777976484745-475682227.jpeg",
+    "colors": [
+      "Light Blue",
+      "Dark Blue",
+      "Black"
+    ],
+    "sizes": [
+      "Small",
+      "Medium",
+      "Large",
+      "Extra Large"
+    ],
+    "stock": {
+      "Light Blue": {
+        "Small": 5,
+        "Medium": 0,
+        "Large": 12,
+        "Extra Large": 4
+      },
+      "Dark Blue": {
+        "Small": 0,
+        "Medium": 9,
+        "Large": 13,
+        "Extra Large": 5
+      },
+      "Black": {
+        "Small": 7,
+        "Medium": 10,
+        "Large": 14,
+        "Extra Large": 6
+      }
+    },
+    "totalStock": 85
+  },
+  {
+    "id": 4,
+    "name": "Cargo Pants",
+    "price": 45,
+    "image": "/uploads/1777976484745-475682227.jpeg",
+    "colors": [
+      "Olive",
+      "Black",
+      "Beige",
+      "Navy"
+    ],
+    "sizes": [
+      "Small",
+      "Medium",
+      "Large",
+      "Extra Large"
+    ],
+    "stock": {
+      "Olive": {
+        "Small": 12,
+        "Medium": 16,
+        "Large": 20,
+        "Extra Large": 8
+      },
+      "Black": {
+        "Small": 14,
+        "Medium": 18,
+        "Large": 22,
+        "Extra Large": 10
+      },
+      "Beige": {
+        "Small": 10,
+        "Medium": 14,
+        "Large": 18,
+        "Extra Large": 6
+      },
+      "Navy": {
+        "Small": 11,
+        "Medium": 15,
+        "Large": 19,
+        "Extra Large": 7
+      }
+    },
+    "totalStock": 220
+  },
+  {
+    "id": 5,
+    "name": "Baggy Jeans",
+    "price": 35,
+    "image": "/uploads/1777976484745-475682227.jpeg",
+    "colors": [
+      "Light Wash",
+      "Medium Wash",
+      "Dark Wash",
+      "Black"
+    ],
+    "sizes": [
+      "Small",
+      "Medium",
+      "Large",
+      "Extra Large"
+    ],
+    "stock": {
+      "Light Wash": {
+        "Small": 15,
+        "Medium": 20,
+        "Large": 25,
+        "Extra Large": 10
+      },
+      "Medium Wash": {
+        "Small": 16,
+        "Medium": 21,
+        "Large": 26,
+        "Extra Large": 11
+      },
+      "Dark Wash": {
+        "Small": 14,
+        "Medium": 19,
+        "Large": 24,
+        "Extra Large": 9
+      },
+      "Black": {
+        "Small": 13,
+        "Medium": 18,
+        "Large": 23,
+        "Extra Large": 8
+      }
+    },
+    "totalStock": 272
+  },
+  {
+    "id": 6,
+    "name": "Crop Top",
+    "price": 30,
+    "image": "/uploads/1777976484745-475682227.jpeg",
+    "colors": [
+      "White",
+      "Black",
+      "Pink",
+      "Yellow"
+    ],
+    "sizes": [
+      "Small",
+      "Medium",
+      "Large",
+      "Extra Large"
+    ],
+    "stock": {
+      "White": {
+        "Small": 18,
+        "Medium": 22,
+        "Large": 28,
+        "Extra Large": 12
+      },
+      "Black": {
+        "Small": 20,
+        "Medium": 25,
+        "Large": 30,
+        "Extra Large": 15
+      },
+      "Pink": {
+        "Small": 16,
+        "Medium": 20,
+        "Large": 26,
+        "Extra Large": 10
+      },
+      "Yellow": {
+        "Small": 17,
+        "Medium": 21,
+        "Large": 27,
+        "Extra Large": 11
+      }
+    },
+    "totalStock": 318
+  },
+  {
+    "id": 7,
+    "name": "Style Palm",
+    "price": 25,
+    "image": "/uploads/1777976484745-475682227.jpeg",
+    "colors": [
+      "Multicolor",
+      "Black",
+      "White"
+    ],
+    "sizes": [
+      "Small",
+      "Medium",
+      "Large",
+      "Extra Large"
+    ],
+    "stock": {
+      "Multicolor": {
+        "Small": 10,
+        "Medium": 15,
+        "Large": 20,
+        "Extra Large": 8
+      },
+      "Black": {
+        "Small": 12,
+        "Medium": 18,
+        "Large": 22,
+        "Extra Large": 10
+      },
+      "White": {
+        "Small": 11,
+        "Medium": 16,
+        "Large": 21,
+        "Extra Large": 9
+      }
+    },
+    "totalStock": 172
+  }
+]

@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1,
+    "customer_name": "temi",
+    "customer_email": "temiloluwafasany8@gmail.com",
+    "phone_number": "09128361081",
+    "delivery_address": "NO 1 EPUTU MALL",
+    "product_id": 4,
+    "color": "Khaki",
+    "size": "Medium",
+    "quantity": 1,
+    "currency": "USD",
+    "status": "Delivered",
+    "date": "2026-05-05T09:35:32.432Z"
+  },
+  {
+    "id": 2,
+    "customer_name": "temi",
+    "customer_email": "temiloluwafasany8@gmail.com",
+    "phone_number": "09128361081",
+    "delivery_address": "NO 1 EPUTU MALL",
+    "product_id": 1,
+    "color": "Black",
+    "size": "Large",
+    "quantity": 1,
+    "currency": "USD",
+    "status": "Delivered",
+    "date": "2026-05-05T12:55:59.705Z"
+  },
+  {
+    "id": 3,
+    "customer_name": "temi",
+    "customer_email": "temiloluwafasany8@gmail.com",
+    "phone_number": "09128361081",
+    "delivery_address": "NO 1 EPUTU MALL",
+    "product_id": 3,
+    "color": "Light Blue",
+    "size": "Large",
+    "quantity": 1,
+    "currency": "USD",
+    "status": "Delivered",
+    "date": "2026-05-05T19:39:38.050Z"
+  },
+  {
+    "id": 4,
+    "customer_name": "TEMI",
+    "customer_email": "temiloluwafasany8@gmail.com",
+    "phone_number": "09128361081",
+    "delivery_address": "NO 1 EPUTU MALL",
+    "product_id": 3,
+    "color": "Light Blue",
+    "size": "Medium",
+    "quantity": 8,
+    "currency": "NGN",
+    "status": "Delivered",
+    "date": "2026-05-07T23:37:41.936Z"
+  },
+  {
+    "id": 5,
+    "customer_name": "TEMI",
+    "customer_email": "temiloluwafasany8@gmail.com",
+    "phone_number": "09128361081",
+    "delivery_address": "NO 1 EPUTU MALL",
+    "product_id": 3,
+    "color": "Dark Blue",
+    "size": "Small",
+    "quantity": 6,
+    "currency": "NGN",
+    "status": "Delivered",
+    "date": "2026-05-07T23:40:18.101Z"
+  }
+]

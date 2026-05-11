@@ -27,6 +27,9 @@ app.use((req, res, next) => {
     next();
 });
 
+// Serve static files from the public directory
+app.use(express.static(path.join(__dirname, 'public')));
+
 // Initialize data files
 const dataDir = path.join(__dirname, 'data');
 if (!fs.existsSync(dataDir)) {

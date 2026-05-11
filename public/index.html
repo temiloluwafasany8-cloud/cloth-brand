@@ -1961,6 +1961,10 @@ i cant see my orders in the customer website and i cant see delivered products o
             const otp = document.getElementById('authOtp').value.trim();
             const errorDiv = document.getElementById('authError');
             errorDiv.textContent = '';
+            // Reset error message styling to default (red)
+            errorDiv.style.color = '#e74c3c';
+            errorDiv.style.backgroundColor = 'rgba(231, 76, 60, 0.1)';
+            errorDiv.style.borderLeftColor = '#e74c3c';
 
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) {
@@ -1989,7 +1993,10 @@ i cant see my orders in the customer website and i cant see delivered products o
                     if (data.success) {
                         passwordResetStage = 2;
                         updateAuthFormState();
-                        errorDiv.textContent = `${data.message} ${data.otp ? 'Your OTP: ' + data.otp : ''}`;
+                        errorDiv.textContent = data.message || 'OTP has been sent to your email. Please enter it below.';
+                        errorDiv.style.color = '#27ae60';
+                        errorDiv.style.backgroundColor = 'rgba(39, 174, 96, 0.1)';
+                        errorDiv.style.borderLeftColor = '#27ae60';
                     } else {
                         throw new Error(data.message || 'Failed to request OTP');
                     }

@@ -4,8 +4,23 @@ const path = require('path');
 const multer = require('multer');
 const os = require('os');
 const { exec } = require('child_process');
+const nodemailer = require('nodemailer');
 
 const app = express();
+
+// Configure email transporter
+let transporter;
+try {
+    transporter = nodemailer.createTransport({
+        service: process.env.EMAIL_SERVICE || 'gmail',
+        auth: {
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASSWORD
+        }
+    });
+} catch (err) {
+    console.log('Email service not configured. Password reset OTP will be logged to console only.');
+}
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json({ limit: '10mb' }));
@@ -261,7 +276,7 @@ app.post('/api/signin', (req, res) => {
 });
 
 // 3. Request password reset OTP
-app.post('/api/request-password-reset', (req, res) => {
+app.post('/api/request-password-reset', async (req, res) => {
     try {
         const email = req.body.email ? String(req.body.email).trim().toLowerCase() : '';
 
@@ -287,9 +302,33 @@ app.post('/api/request-password-reset', (req, res) => {
         users[userIndex].resetOtpExpiry = expiry;
         fs.writeFileSync(usersFile, JSON.stringify(users, null, 2));
 
+        // Log OTP for debugging/development
         console.log(`Password reset OTP for ${email}: ${otp}`);
 
-        res.json({ success: true, message: 'OTP generated and sent to your email address.', otp });
+        // Try to send OTP via email
+        if (transporter) {
+            try {
+                await transporter.sendMail({
+                    from: process.env.EMAIL_USER || 'noreply@clothbrand.com',
+                    to: email,
+                    subject: 'Password Reset Code',
+                    html: `
+                        <p>Hello,</p>
+                        <p>You requested to reset your password. Use this code to complete the process:</p>
+                        <h2 style="color: #667eea; font-size: 32px; letter-spacing: 4px;">${otp}</h2>
+                        <p>This code will expire in 10 minutes.</p>
+                        <p>If you didn't request this, please ignore this email.</p>
+                        <p>Best regards,<br>Clothing Brand Team</p>
+                    `
+                });
+                console.log(`OTP sent successfully to ${email}`);
+            } catch (emailErr) {
+                console.error('Failed to send OTP email:', emailErr);
+                // Still return success - OTP was saved, just couldn't send email
+            }
+        }
+
+        res.json({ success: true, message: 'Check your email for the password reset code.' });
     } catch (err) {
         console.error('Request password reset error:', err);
         res.status(500).json({ success: false, message: 'Failed to request password reset' });

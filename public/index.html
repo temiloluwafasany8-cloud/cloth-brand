@@ -33,7 +33,7 @@
         /* General Styles */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%); background-attachment: fixed;
             color: #2c3e50;
             min-height: 100vh;
             line-height: 1.6;
@@ -41,9 +41,9 @@
 
         header {
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            color: #fff;
+            color: #ffffff;
             padding: 2rem 3rem;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2), 0 0 1px rgba(0, 0, 0, 0.1);
             position: sticky;
             top: 0;
             z-index: 100;
@@ -54,8 +54,8 @@
 
         header h1 {
             font-size: 2rem;
-            font-weight: 700;
-            letter-spacing: 1px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
             margin: 0;
             text-transform: uppercase;
             background: linear-gradient(45deg, #fff, #e74c3c);
@@ -109,11 +109,11 @@
         .search-field button {
             padding: 0.95rem 1.5rem;
             background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
-            color: #fff;
+            color: #ffffff;
             border: none;
             border-radius: 999px;
             cursor: pointer;
-            font-weight: 700;
+            font-weight: 800;
             transition: transform 0.2s ease;
         }
 
@@ -157,7 +157,7 @@
         .footer h4 {
             margin-bottom: 0.5rem;
             font-size: 1rem;
-            color: #1a1a2e;
+            color: #0f1419;
         }
 
         .social-links {
@@ -175,7 +175,7 @@
             height: 42px;
             border-radius: 50%;
             background: #1a1a2e;
-            color: #fff;
+            color: #ffffff;
             text-decoration: none;
             transition: transform 0.2s ease, background 0.2s ease;
         }
@@ -192,7 +192,7 @@
         }
 
         .trust-badge {
-            background: #f8f9fa;
+            background: linear-gradient(135deg, #f9fafb 0%, #f5f7fa 100%);
             border: 1px solid #dde4ea;
             border-radius: 18px;
             padding: 0.8rem 1rem;
@@ -225,11 +225,11 @@
 
         .product-card {
             background: #fff;
-            border-radius: 16px;
+            border-radius: 20px;
             padding: 0;
             text-align: center;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.06);
             overflow: hidden;
             position: relative;
             border: 1px solid rgba(0, 0, 0, 0.04);
@@ -252,6 +252,7 @@
         }
 
         .product-card:hover {
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15), 0 0 1px rgba(0, 0, 0, 0.1);
             transform: translateY(-8px) scale(1.02);
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
         }
@@ -267,14 +268,14 @@
         .product-card h3 {
             margin: 1.5rem 1rem 0.75rem;
             font-size: 1.35rem;
-            font-weight: 700;
-            color: #1a1a2e;
+            font-weight: 800;
+            color: #0f1419;
             line-height: 1.3;
         }
 
         .product-card p {
             color: #e74c3c;
-            font-weight: 700;
+            font-weight: 800;
             margin: 0.75rem 1rem 1.5rem;
             font-size: 1.45rem;
             letter-spacing: -0.5px;
@@ -283,21 +284,22 @@
         /* The "Select" Button */
         .select-btn {
             background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
-            color: #fff;
+            color: #ffffff;
             border: none;
             padding: 1rem 1.5rem;
             width: calc(100% - 2rem);
             margin: 0 1rem 1.5rem;
             cursor: pointer;
-            font-weight: 700;
+            font-weight: 800;
             text-transform: uppercase;
-            transition: all 0.3s ease;
-            border-radius: 8px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 12px;
             font-size: 0.95rem;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
         }
 
         .select-btn:hover:not(:disabled) {
+            transform: translateY(-4px);
             background: linear-gradient(135deg, #c0392b 0%, #a93226 100%);
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(231, 76, 60, 0.3);
@@ -317,24 +319,25 @@
         .buy-btn, .cart-btn {
             border: none;
             padding: 0.9rem 1rem;
-            font-weight: 700;
+            font-weight: 800;
             cursor: pointer;
-            border-radius: 10px;
+            border-radius: 14px;
             transition: transform 0.25s ease, box-shadow 0.25s ease;
             min-width: 130px;
         }
 
         .buy-btn {
             background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
-            color: #fff;
+            color: #ffffff;
         }
 
         .cart-btn {
             background: linear-gradient(135deg, #2980b9 0%, #3498db 100%);
-            color: #fff;
+            color: #ffffff;
         }
 
         .buy-btn:hover:not(:disabled), .cart-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
             transform: translateY(-2px);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
         }
@@ -367,7 +370,7 @@
         .cart-content {
             width: min(100%, 720px);
             background: #fff;
-            border-radius: 16px;
+            border-radius: 20px;
             padding: 1.5rem;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
         }
@@ -398,8 +401,8 @@
         }
 
         .cart-count {
-            font-weight: 700;
-            color: #fff;
+            font-weight: 800;
+            color: #ffffff;
         }
 
         .cart-empty {
@@ -411,9 +414,9 @@
         .close-cart-btn {
             border: none;
             background: #e74c3c;
-            color: #fff;
+            color: #ffffff;
             padding: 0.75rem 1rem;
-            border-radius: 10px;
+            border-radius: 14px;
             cursor: pointer;
         }
 
@@ -429,11 +432,11 @@
         .checkout-cart-btn {
             border: none;
             background: linear-gradient(135deg, #e67e22 0%, #d35400 100%);
-            color: #fff;
+            color: #ffffff;
             padding: 0.9rem 1.2rem;
-            border-radius: 10px;
+            border-radius: 14px;
             cursor: pointer;
-            font-weight: 700;
+            font-weight: 800;
         }
 
         /* Checkout Form */
@@ -486,7 +489,7 @@
         .checkout-form h2 {
             margin-bottom: 2.5rem;
             font-size: 2.2rem;
-            color: #1a1a2e;
+            color: #0f1419;
             text-align: center;
             font-weight: 800;
             position: relative;
@@ -503,7 +506,7 @@
         .form-field label {
             display: block;
             margin-bottom: 0.9rem;
-            font-weight: 700;
+            font-weight: 800;
             color: #2c3e50;
             font-size: 1.05rem;
             letter-spacing: 0.3px;
@@ -514,12 +517,12 @@
         .form-field select {
             width: 100%;
             padding: 1.1rem;
-            border: 2px solid #ecf0f1;
+            border: 2px solid rgba(0, 0, 0, 0.1);
             border-radius: 12px;
             font-family: inherit;
             font-size: 1.05rem;
-            transition: all 0.3s ease;
-            background: #f8f9fa;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: linear-gradient(135deg, #f9fafb 0%, #f5f7fa 100%);
             box-sizing: border-box;
         }
 
@@ -547,13 +550,13 @@
 
         .color-tab {
             padding: 0.8rem 1.2rem;
-            background: #ecf0f1;
+            background: linear-gradient(135deg, #f0f4f8 0%, #e8ecf1 100%);
             color: #2c3e50;
-            border: 2px solid #ecf0f1;
-            border-radius: 8px;
+            border: 2px solid rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
             cursor: pointer;
-            font-weight: 700;
-            transition: all 0.3s ease;
+            font-weight: 800;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             font-size: 0.9rem;
             display: inline-block;
             margin: 0.25rem;
@@ -587,9 +590,9 @@ i cant see my orders in the customer website and i cant see delivered products o
             padding: 1rem;
             border: none;
             border-radius: 12px;
-            font-weight: 700;
+            font-weight: 800;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             font-size: 1rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -597,7 +600,7 @@ i cant see my orders in the customer website and i cant see delivered products o
 
         .submit-btn {
             background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
-            color: #fff;
+            color: #ffffff;
         }
 
         .submit-btn:hover {
@@ -607,7 +610,7 @@ i cant see my orders in the customer website and i cant see delivered products o
         }
 
         .cancel-btn {
-            background: #ecf0f1;
+            background: linear-gradient(135deg, #f0f4f8 0%, #e8ecf1 100%);
             color: #7f8c8d;
         }
 
@@ -665,8 +668,8 @@ i cant see my orders in the customer website and i cant see delivered products o
             margin-bottom: 2.5rem;
             text-align: center;
             font-size: 2.2rem;
-            font-weight: 700;
-            color: #1a1a2e;
+            font-weight: 800;
+            color: #0f1419;
             position: relative;
             z-index: 1;
         }
@@ -680,7 +683,7 @@ i cant see my orders in the customer website and i cant see delivered products o
         .auth-form label {
             display: block;
             margin-bottom: 0.6rem;
-            font-weight: 700;
+            font-weight: 800;
             color: #2c3e50;
             font-size: 0.95rem;
         }
@@ -688,11 +691,11 @@ i cant see my orders in the customer website and i cant see delivered products o
         .auth-form input {
             width: 100%;
             padding: 0.9rem;
-            border: 2px solid #ecf0f1;
-            border-radius: 8px;
+            border: 2px solid rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
             font-size: 1rem;
-            transition: all 0.3s ease;
-            background: #f8f9fa;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: linear-gradient(135deg, #f9fafb 0%, #f5f7fa 100%);
         }
 
         .auth-form input:focus {
@@ -706,15 +709,15 @@ i cant see my orders in the customer website and i cant see delivered products o
             width: 100%;
             padding: 1rem;
             background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
-            color: #fff;
+            color: #ffffff;
             border: none;
-            border-radius: 8px;
-            font-weight: 700;
+            border-radius: 12px;
+            font-weight: 800;
             cursor: pointer;
             margin-top: 1.5rem;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
             font-size: 0.95rem;
             position: relative;
             z-index: 1;
@@ -745,8 +748,8 @@ i cant see my orders in the customer website and i cant see delivered products o
             cursor: pointer;
             text-decoration: none;
             font-size: 0.9rem;
-            font-weight: 700;
-            transition: all 0.3s ease;
+            font-weight: 800;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .toggle-auth button:hover {
@@ -771,7 +774,7 @@ i cant see my orders in the customer website and i cant see delivered products o
 
         .user-info {
             background: rgba(255, 255, 255, 0.95);
-            color: #1a1a2e;
+            color: #0f1419;
             padding: 0.5rem 0.8rem;
             border-radius: 20px;
             font-size: 0.8rem;
@@ -784,7 +787,7 @@ i cant see my orders in the customer website and i cant see delivered products o
         }
 
         .user-info span {
-            font-weight: 700;
+            font-weight: 800;
             color: #e74c3c;
             max-width: 120px;
             overflow: hidden;
@@ -794,14 +797,14 @@ i cant see my orders in the customer website and i cant see delivered products o
 
         .logout-btn {
             background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
-            color: #fff;
+            color: #ffffff;
             border: none;
             padding: 0.4rem 0.6rem;
             border-radius: 15px;
             cursor: pointer;
             font-size: 0.7rem;
-            font-weight: 700;
-            transition: all 0.3s ease;
+            font-weight: 800;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
@@ -813,14 +816,14 @@ i cant see my orders in the customer website and i cant see delivered products o
 
         .orders-btn {
             background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
-            color: #fff;
+            color: #ffffff;
             border: none;
             padding: 0.4rem 0.6rem;
             border-radius: 15px;
             cursor: pointer;
             font-size: 0.7rem;
-            font-weight: 700;
-            transition: all 0.3s ease;
+            font-weight: 800;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             text-transform: uppercase;
             letter-spacing: 0.5px;
             margin-right: 0.5rem;
@@ -857,7 +860,7 @@ i cant see my orders in the customer website and i cant see delivered products o
 
         .welcome-section h2 {
             font-size: 3rem;
-            color: #1a1a2e;
+            color: #0f1419;
             margin-bottom: 1.5rem;
             font-weight: 800;
             position: relative;
@@ -885,7 +888,7 @@ i cant see my orders in the customer website and i cant see delivered products o
 
         .section-title {
             font-size: 2.2rem;
-            color: #1a1a2e;
+            color: #0f1419;
             margin-bottom: 4rem;
             font-weight: 800;
             position: relative;
@@ -955,10 +958,10 @@ i cant see my orders in the customer website and i cant see delivered products o
 
         .product-overlay span {
             color: white;
-            font-weight: 700;
+            font-weight: 800;
             font-size: 1.1rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
         }
 
         .product-card:hover .product-overlay {
@@ -972,7 +975,7 @@ i cant see my orders in the customer website and i cant see delivered products o
             padding: 0.4rem 0.8rem;
             border-radius: 20px;
             font-size: 0.75rem;
-            font-weight: 700;
+            font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             z-index: 3;
@@ -997,8 +1000,8 @@ i cant see my orders in the customer website and i cant see delivered products o
 
         .product-title {
             font-size: 1.25rem;
-            font-weight: 700;
-            color: #1a1a2e;
+            font-weight: 800;
+            color: #0f1419;
             margin: 0;
             line-height: 1.3;
         }
@@ -1011,7 +1014,7 @@ i cant see my orders in the customer website and i cant see delivered products o
 
         .price-display {
             font-size: 1.5rem;
-            font-weight: 700;
+            font-weight: 800;
             color: #e74c3c;
         }
 
@@ -1041,12 +1044,12 @@ i cant see my orders in the customer website and i cant see delivered products o
 
         .meta-value {
             color: #2c3e50;
-            font-weight: 700;
+            font-weight: 800;
         }
 
         .meta-value.stock-count {
             color: #27ae60;
-            font-weight: 700;
+            font-weight: 800;
         }
 
         /* Footer */
@@ -1076,12 +1079,12 @@ i cant see my orders in the customer website and i cant see delivered products o
         .footer-links a {
             color: #e74c3c;
             text-decoration: none;
-            transition: all 0.3s ease;
-            font-weight: 700;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 800;
         }
 
         .footer-links a:hover {
-            color: #fff;
+            color: #ffffff;
             text-decoration: underline;
         }
 
@@ -1118,12 +1121,12 @@ i cant see my orders in the customer website and i cant see delivered products o
         }
 
         .order-item {
-            background: #f8f9fa;
+            background: linear-gradient(135deg, #f9fafb 0%, #f5f7fa 100%);
             border: 1px solid #e9ecef;
             border-radius: 12px;
             padding: 1.5rem;
             margin-bottom: 1rem;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .order-item:hover {
@@ -1141,8 +1144,8 @@ i cant see my orders in the customer website and i cant see delivered products o
         }
 
         .order-id {
-            font-weight: 700;
-            color: #1a1a2e;
+            font-weight: 800;
+            color: #0f1419;
             font-size: 1.1rem;
         }
 
@@ -1150,7 +1153,7 @@ i cant see my orders in the customer website and i cant see delivered products o
             padding: 0.4rem 0.8rem;
             border-radius: 20px;
             font-size: 0.85rem;
-            font-weight: 700;
+            font-weight: 800;
             text-transform: uppercase;
         }
 
@@ -1186,7 +1189,7 @@ i cant see my orders in the customer website and i cant see delivered products o
         }
 
         .detail-value {
-            font-weight: 700;
+            font-weight: 800;
             color: #2c3e50;
         }
 
@@ -1343,8 +1346,8 @@ i cant see my orders in the customer website and i cant see delivered products o
         <h1>My Clothing Brand</h1>
         <div class="header-right">
             <div class="currency-selector">
-                <label for="currencySelect" style="color: #fff; font-size: 0.9rem; margin-right: 0.5rem;">Currency:</label>
-                <select id="currencySelect" style="padding: 0.3rem 0.6rem; border-radius: 4px; border: none; background: rgba(255,255,255,0.9); color: #1a1a2e;">
+                <label for="currencySelect" style="color: #ffffff; font-size: 0.9rem; margin-right: 0.5rem;">Currency:</label>
+                <select id="currencySelect" style="padding: 0.3rem 0.6rem; border-radius: 4px; border: none; background: rgba(255,255,255,0.9); color: #0f1419;">
                     <option value="USD">USD ($)</option>
                     <option value="EUR">EUR (€)</option>
                     <option value="GBP">GBP (£)</option>
@@ -1459,8 +1462,8 @@ i cant see my orders in the customer website and i cant see delivered products o
     <div id="checkoutModal" class="checkout-modal">
         <div class="checkout-form">
             <h2>Complete Your Order</h2>
-            <p id="checkoutProductName" style="margin-bottom: 1rem; font-weight: 700; color: #333;"></p>
-            <div id="checkoutCartSummary" style="display: none; margin-bottom: 1rem; padding: 1rem; background: #f0f7ff; border-radius: 10px; border: 1px solid #c9e2ff;">
+            <p id="checkoutProductName" style="margin-bottom: 1rem; font-weight: 800; color: #333;"></p>
+            <div id="checkoutCartSummary" style="display: none; margin-bottom: 1rem; padding: 1rem; background: #f0f7ff; border-radius: 14px; border: 1px solid #c9e2ff;">
                 <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.75rem; margin-bottom:0.85rem;">
                     <div>
                         <strong style="font-size:1rem;">Cart Summary</strong>
@@ -1471,14 +1474,14 @@ i cant see my orders in the customer website and i cant see delivered products o
                 <div id="checkoutCartItems" style="display:flex; flex-direction:column; gap:0.75rem; margin-bottom:0.75rem;"></div>
                 <div id="checkoutCartTotal" style="font-weight:700; color:#1f3a63;"></div>
             </div>
-            <div id="productOptionsDisplay" style="margin-bottom: 1.5rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #e74c3c;">
-                <div id="paymentPolicyDisplay" style="margin-bottom: 1rem; font-weight: 700; color: #333;"></div>
+            <div id="productOptionsDisplay" style="margin-bottom: 1.5rem; padding: 1rem; background: linear-gradient(135deg, #f9fafb 0%, #f5f7fa 100%); border-radius: 12px; border-left: 4px solid #e74c3c;">
+                <div id="paymentPolicyDisplay" style="margin-bottom: 1rem; font-weight: 800; color: #333;"></div>
                 <div style="margin-bottom: 0.8rem;">
-                    <div style="font-weight: 700; color: #333; margin-bottom: 0.5rem; font-size: 0.95rem;">Available Colors:</div>
+                    <div style="font-weight: 800; color: #333; margin-bottom: 0.5rem; font-size: 0.95rem;">Available Colors:</div>
                     <div id="availableColorsList" style="display: flex; flex-wrap: wrap; gap: 0.5rem;"></div>
                 </div>
                 <div>
-                    <div style="font-weight: 700; color: #333; margin-bottom: 0.5rem; font-size: 0.95rem;">Available Sizes:</div>
+                    <div style="font-weight: 800; color: #333; margin-bottom: 0.5rem; font-size: 0.95rem;">Available Sizes:</div>
                     <div id="availableSizesList" style="display: flex; flex-wrap: wrap; gap: 0.5rem;"></div>
                 </div>
             </div>
@@ -1530,12 +1533,12 @@ i cant see my orders in the customer website and i cant see delivered products o
                     <label>Payment Method</label>
                     <div id="paymentOptionsContainer" class="payment-options" style="display: flex; gap: 0.75rem; flex-wrap: wrap;"></div>
                 </div>
-                <div id="prepayFields" style="display: none; margin-bottom: 1rem; background: #f5fafa; padding: 1rem; border-radius: 10px; border: 1px solid #d1e7e9;">
+                <div id="prepayFields" style="display: none; margin-bottom: 1rem; background: #f5fafa; padding: 1rem; border-radius: 14px; border: 1px solid #d1e7e9;">
                     <div style="margin-bottom: 1rem;">
                         <strong>PREPAY Payment Instructions</strong>
                         <p style="margin: 0.5rem 0 0; line-height: 1.5;">Please transfer the payment to the account below and upload a screenshot of the completed transfer.</p>
                     </div>
-                    <div style="padding: 1rem; background: #ffffff; border-radius: 8px; border: 1px solid #dce6e8;">
+                    <div style="padding: 1rem; background: #ffffff; border-radius: 12px; border: 1px solid #dce6e8;">
                         <p style="margin: 0; font-size: 0.95rem;"><strong>Account number:</strong> 9128361081</p>
                         <p style="margin: 0.4rem 0 0; font-size: 0.95rem;"><strong>Provider:</strong> Moniepoint</p>
                         <p style="margin: 0.4rem 0 0; font-size: 0.95rem;"><strong>Account name:</strong> Fasanya Temiloluwa Iyanu</p>
@@ -2030,13 +2033,13 @@ i cant see my orders in the customer website and i cant see delivered products o
                                     <div class="meta-item">
                                         <span class="meta-label">Available Colors:</span>
                                         <div class="option-badges" style="margin-top: 0.5rem; display: flex; flex-wrap: wrap; gap: 0.3rem;">
-                                            ${item.colors && item.colors.length > 0 ? [...new Set(item.colors)].map(color => `<span class="color-badge" style="display: inline-block; padding: 0.2rem 0.6rem; background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); color: white; border-radius: 15px; font-size: 0.75rem; font-weight: 700;">${color}</span>`).join('') : '<span style="color: #666; font-style: italic;">N/A</span>'}
+                                            ${item.colors && item.colors.length > 0 ? [...new Set(item.colors)].map(color => `<span class="color-badge" style="display: inline-block; padding: 0.2rem 0.6rem; background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); color: white; border-radius: 15px; font-size: 0.75rem; font-weight: 800;">${color}</span>`).join('') : '<span style="color: #666; font-style: italic;">N/A</span>'}
                                         </div>
                                     </div>
                                     <div class="meta-item">
                                         <span class="meta-label">Available Sizes:</span>
                                         <div class="option-badges" style="margin-top: 0.5rem; display: flex; flex-wrap: wrap; gap: 0.3rem;">
-                                            ${item.sizes && item.sizes.length > 0 ? item.sizes.map(size => `<span class="size-badge" style="display: inline-block; padding: 0.2rem 0.6rem; background: #3498db; color: white; border-radius: 15px; font-size: 0.75rem; font-weight: 700;">${size}</span>`).join('') : '<span style="color: #666; font-style: italic;">N/A</span>'}
+                                            ${item.sizes && item.sizes.length > 0 ? item.sizes.map(size => `<span class="size-badge" style="display: inline-block; padding: 0.2rem 0.6rem; background: #3498db; color: white; border-radius: 15px; font-size: 0.75rem; font-weight: 800;">${size}</span>`).join('') : '<span style="color: #666; font-style: italic;">N/A</span>'}
                                         </div>
                                     </div>
                                     <div class="meta-item">
@@ -2169,7 +2172,7 @@ i cant see my orders in the customer website and i cant see delivered products o
             if (resolvedColors.length > 0) {
                 resolvedColors.forEach(color => {
                     const colorBadge = document.createElement('span');
-                    colorBadge.style.cssText = 'display: inline-block; padding: 0.4rem 0.8rem; background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); color: white; border-radius: 20px; font-size: 0.85rem; font-weight: 700;';
+                    colorBadge.style.cssText = 'display: inline-block; padding: 0.4rem 0.8rem; background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); color: white; border-radius: 20px; font-size: 0.85rem; font-weight: 800;';
                     colorBadge.textContent = color;
                     colorsList.appendChild(colorBadge);
                 });
@@ -2178,7 +2181,7 @@ i cant see my orders in the customer website and i cant see delivered products o
             if (resolvedSizes.length > 0) {
                 resolvedSizes.forEach(size => {
                     const sizeBadge = document.createElement('span');
-                    sizeBadge.style.cssText = 'display: inline-block; padding: 0.4rem 0.8rem; background: #3498db; color: white; border-radius: 20px; font-size: 0.85rem; font-weight: 700;';
+                    sizeBadge.style.cssText = 'display: inline-block; padding: 0.4rem 0.8rem; background: #3498db; color: white; border-radius: 20px; font-size: 0.85rem; font-weight: 800;';
                     sizeBadge.textContent = size;
                     sizesList.appendChild(sizeBadge);
                 });
@@ -2236,7 +2239,7 @@ i cant see my orders in the customer website and i cant see delivered products o
                         tab.className = 'color-tab';
                         tab.textContent = color;
                         tab.dataset.color = color;
-                        tab.style.cssText = 'padding: 0.8rem 1.2rem; background: #ecf0f1; color: #2c3e50; border: 2px solid #ecf0f1; border-radius: 8px; cursor: pointer; font-weight: 700; margin: 0.25rem; display: inline-block;';
+                        tab.style.cssText = 'padding: 0.8rem 1.2rem; background: linear-gradient(135deg, #f0f4f8 0%, #e8ecf1 100%); color: #2c3e50; border: 2px solid rgba(0, 0, 0, 0.1); border-radius: 12px; cursor: pointer; font-weight: 800; margin: 0.25rem; display: inline-block;';
                         tab.onclick = () => {
                             console.log('Tab clicked for color:', color);
                             selectColorTab(color);
@@ -2439,7 +2442,7 @@ i cant see my orders in the customer website and i cant see delivered products o
             };
             options.forEach(method => {
                 const label = document.createElement('label');
-                label.style.cssText = 'display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.3rem 0.6rem; background: #f8f9fa; border-radius: 8px; cursor: pointer; border: 1px solid #dcdde1;';
+                label.style.cssText = 'display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.3rem 0.6rem; background: linear-gradient(135deg, #f9fafb 0%, #f5f7fa 100%); border-radius: 12px; cursor: pointer; border: 1px solid #dcdde1;';
                 const input = document.createElement('input');
                 input.type = 'radio';
                 input.name = 'paymentMethod';
@@ -2886,7 +2889,7 @@ i cant see my orders in the customer website and i cant see delivered products o
             justify-content: center;
             cursor: pointer;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .chatbot-toggle:hover {
@@ -2937,7 +2940,7 @@ i cant see my orders in the customer website and i cant see delivered products o
             flex: 1;
             padding: 15px;
             overflow-y: auto;
-            background: #f8f9fa;
+            background: linear-gradient(135deg, #f9fafb 0%, #f5f7fa 100%);
         }
 
         .message {
@@ -3000,8 +3003,8 @@ i cant see my orders in the customer website and i cant see delivered products o
             border: none;
             border-radius: 25px;
             cursor: pointer;
-            font-weight: 700;
-            transition: all 0.3s ease;
+            font-weight: 800;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .chatbot-input button:hover {

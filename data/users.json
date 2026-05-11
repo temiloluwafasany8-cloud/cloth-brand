@@ -5,5 +5,33 @@
     "email": "temiloluwafasany8@gmail.com",
     "password": "teemz123*",
     "createdAt": "2026-05-05T10:19:31.959Z"
+  },
+  {
+    "id": 2,
+    "name": "Test User",
+    "email": "test+bf858fb6@example.com",
+    "password": "test1234",
+    "createdAt": "2026-05-11T00:59:20.713Z"
+  },
+  {
+    "id": 3,
+    "name": "Test User",
+    "email": "test+87d14244@example.com",
+    "password": "test1234",
+    "createdAt": "2026-05-11T01:00:57.219Z"
+  },
+  {
+    "id": 4,
+    "name": "Order Tester",
+    "email": "ordertest+9475001d@example.com",
+    "password": "test1234",
+    "createdAt": "2026-05-11T01:02:54.375Z"
+  },
+  {
+    "id": 5,
+    "name": "Order Tester",
+    "email": "ordertest+558c2ee7@example.com",
+    "password": "test1234",
+    "createdAt": "2026-05-11T01:04:25.843Z"
   }
 ]

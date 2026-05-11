@@ -41,6 +41,27 @@
             font-size: 0.9rem;
         }
 
+        .header-actions {
+            margin-top: 1.25rem;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .logout-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 0.85rem 1.2rem;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .logout-btn:hover {
+            transform: translateY(-2px);
+        }
+
         .nav-tabs {
             display: flex;
             margin-bottom: 2rem;
@@ -52,13 +73,55 @@
 
         .nav-tab {
             flex: 1;
+            min-width: 140px;
             padding: 1rem;
             background: #f8f9fa;
             border: none;
             cursor: pointer;
-            font-weight: 600;
-            color: #666;
+            font-weight: 700;
+            color: #444;
             transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-tab::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 4px;
+            background: transparent;
+            transition: width 0.3s ease, background 0.3s ease;
+        }
+
+        .nav-tab:hover::after {
+            width: 100%;
+            background: #667eea;
+        }
+
+        .nav-tab.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .nav-tab.active::after {
+            width: 100%;
+            background: #fff;
+        }
+
+        .nav-tab.users-tab {
+            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            color: #1a1a1a;
+        }
+
+        .nav-tab.users-tab:hover {
+            background: linear-gradient(135deg, #f7c66a 0%, #fd9d6f 100%);
+        }
+
+        .nav-tab.users-tab.active {
+            background: #f39c12;
+            color: #fff;
         }
 
         .nav-tab.active {
@@ -118,6 +181,21 @@
         }
 
         .orders-section h2 {
+            color: #333;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .users-section {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow-x: auto;
+        }
+
+        .users-section h2 {
             color: #333;
             margin-bottom: 1.5rem;
             border-bottom: 2px solid #667eea;
@@ -202,10 +280,61 @@
             color: #d63031;
         }
 
+        .status-confirmed {
+            background-color: #d6e8ff;
+            color: #0056d6;
+        }
+
+        .status-processing {
+            background-color: #f9f0c1;
+            color: #b8860b;
+        }
+
+        .status-ontheway {
+            background-color: #d1f2eb;
+            color: #117a65;
+        }
+
+        .status-dispatched {
+            background-color: #f0f5ff;
+            color: #3a3a9f;
+        }
+
         .status-completed,
         .status-delivered {
             background-color: #a9e6a9;
             color: #27ae60;
+        }
+
+        .status-cancelled {
+            background-color: #f5c6cb;
+            color: #842029;
+        }
+
+        .order-status-select {
+            width: 100%;
+            padding: 0.5rem;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            font-size: 0.95rem;
+            margin-bottom: 0.35rem;
+        }
+
+        .update-status-btn {
+            width: 100%;
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 0.55rem 0.75rem;
+            cursor: pointer;
+            font-weight: 700;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        .update-status-btn:hover {
+            transform: translateY(-1px);
+            opacity: 0.95;
         }
 
         .approve-btn {
@@ -760,12 +889,20 @@
     <div class="container">
         <header>
             <h1>📊 Admin Dashboard</h1>
-            <p>Manage orders and products for your clothing brand</p>
+            <p>Manage orders, products, and registered users for your clothing brand.</p>
+            <div style="margin-top: 0.75rem; display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center;">
+                <p style="color: #444; font-size: 0.95rem; margin: 0;">Use the tabs below to switch between Orders, Products, and Users.</p>
+                <span style="background: #f39c12; color: white; padding: 0.45rem 0.8rem; border-radius: 999px; font-weight: 700; font-size: 0.9rem;">Users tab is highlighted in orange</span>
+            </div>
+            <div class="header-actions">
+                <button id="adminLogoutBtn" class="logout-btn">Logout</button>
+            </div>
         </header>
 
         <div class="nav-tabs">
             <button class="nav-tab active" onclick="showTab('orders', this)">📦 Orders</button>
-            <button class="nav-tab" onclick="showTab('products', this)">👕 Products</button>
+            <button class="nav-tab products-tab" onclick="showTab('products', this)">👕 Products</button>
+            <button class="nav-tab" onclick="showTab('users', this)">👥 Users</button>
         </div>
 
         <div id="orders-tab" class="tab-content active">
@@ -786,12 +923,20 @@
 
             <div class="orders-section">
                 <h2>Customer Orders</h2>
-                <button class="refresh-btn" onclick="loadOrders()">🔄 Refresh Orders</button>
+                <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+                    <button class="refresh-btn" onclick="loadOrders()">🔄 Refresh Orders</button>
+                    <button class="delete-btn" onclick="clearDeliveredOrders()" style="background: linear-gradient(135deg, #e67e22 0%, #d35400 100%);">✅ Clear Approved Orders</button>
+                    <button class="delete-btn" onclick="clearAllOrders()" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">🗑️ Clear All Orders</button>
+                </div>
 
                 <div id="deliveredOrdersSection" class="delivered-orders-section">
                     <div class="empty-state">
                         <p>Loading delivered orders...</p>
                     </div>
+                </div>
+
+                <div style="margin: 1.5rem 0; display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <button class="refresh-btn" onclick="showTab('users', document.querySelector('.nav-tab.users-tab'))">👥 View Registered Users</button>
                 </div>
 
                 <div id="ordersContainer">
@@ -804,7 +949,10 @@
 
         <div id="products-tab" class="tab-content">
             <div class="products-section">
-                <h2>Product Management</h2>
+                <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1rem;">
+                    <h2 style="margin: 0;">Product Management</h2>
+                    <button class="refresh-btn" onclick="showTab('users', document.querySelector('.nav-tab.users-tab'))" style="background: #f39c12; color: white; margin: 0;">👥 View Users</button>
+                </div>
                 <button class="refresh-btn" onclick="loadProducts()" style="margin-bottom: 1.5rem;">🔄 Refresh Products</button>
 
                 <div class="add-product-form">
@@ -817,12 +965,33 @@
                         <label for="newProductPrice">Price ($):</label>
                         <input type="number" id="newProductPrice" step="0.01" placeholder="0.00">
                     </div>
+                    <div class="form-group">
+                        <label for="newProductPaymentMode">Payment Policy:</label>
+                        <select id="newProductPaymentMode">
+                            <option value="BOTH">Payment on Delivery or Before Delivery</option>
+                            <option value="COD">Payment on Delivery only</option>
+                            <option value="PREPAY">Payment Before Delivery only</option>
+                        </select>
+                    </div>
                     <button class="add-btn" onclick="addProduct()">➕ Add Product</button>
                 </div>
 
                 <div id="productsContainer">
                     <div class="empty-state">
                         <p>Loading products...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="users-tab" class="tab-content">
+            <div class="users-section">
+                <h2>Registered Users</h2>
+                <button class="refresh-btn" onclick="loadUsers()" style="margin-bottom: 1.5rem;">🔄 Refresh Users</button>
+
+                <div id="usersContainer">
+                    <div class="empty-state">
+                        <p>Loading users...</p>
                     </div>
                 </div>
             </div>
@@ -857,6 +1026,15 @@
                 </div>
                 
                 <div class="form-group">
+                    <label for="editPaymentMode">Payment Policy:</label>
+                    <select id="editPaymentMode">
+                        <option value="BOTH">Payment on Delivery or Before Delivery</option>
+                        <option value="COD">Payment on Delivery only</option>
+                        <option value="PREPAY">Payment Before Delivery only</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
                     <label>Stock Status:</label>
                     <div class="stock-status-controls">
                         <label class="status-toggle">
@@ -886,14 +1064,36 @@
     </div>
 
     <script>
-        // Load orders when page loads
+        const ALLOWED_ADMIN_EMAILS = ['admin@clothbrand.com', 'manager@clothbrand.com'];
+
+        function adminIsLoggedIn() {
+            const storedEmail = (localStorage.getItem('adminEmail') || '').toLowerCase();
+            return localStorage.getItem('adminLoggedIn') === 'true' && ALLOWED_ADMIN_EMAILS.includes(storedEmail);
+        }
+
+        function requireAdminLogin() {
+            if (!adminIsLoggedIn()) {
+                window.location.href = '/admin-login.html';
+                return false;
+            }
+            return true;
+        }
+
+        function adminLogout() {
+            localStorage.removeItem('adminLoggedIn');
+            localStorage.removeItem('adminEmail');
+            window.location.href = '/admin-login.html';
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
+            if (!requireAdminLogin()) return;
+            document.getElementById('adminLogoutBtn').addEventListener('click', adminLogout);
             loadOrders();
             // Load products if products tab is active (but it's not by default)
         });
 
         function loadOrders() {
-            fetch('/admin/orders')
+            fetch('/admin/orders?t=' + Date.now())
                 .then(response => response.json())
                 .then(orders => {
                     displayDeliveredOrders(orders);
@@ -907,9 +1107,53 @@
                 });
         }
 
+        function clearAllOrders() {
+            if (!confirm('⚠️ Are you sure you want to clear ALL orders? This action cannot be undone!')) {
+                return;
+            }
+            
+            fetch('/admin/orders', {
+                method: 'DELETE'
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Failed to clear orders');
+                return response.json();
+            })
+            .then(data => {
+                alert('✅ All orders cleared successfully!');
+                loadOrders(); // Refresh the orders display
+            })
+            .catch(err => {
+                alert('❌ Error clearing orders: ' + err.message);
+                console.error(err);
+            });
+        }
+
+        function clearDeliveredOrders() {
+            if (!confirm('⚠️ Are you sure you want to clear ALL APPROVED (delivered/completed) orders? This action cannot be undone!')) {
+                return;
+            }
+            
+            fetch('/admin/orders/delivered', {
+                method: 'DELETE'
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Failed to clear delivered orders');
+                return response.json();
+            })
+            .then(data => {
+                alert('✅ ' + data.message);
+                loadOrders(); // Refresh the orders display
+            })
+            .catch(err => {
+                alert('❌ Error clearing delivered orders: ' + err.message);
+                console.error(err);
+            });
+        }
+
         function displayDeliveredOrders(orders) {
             const container = document.getElementById('deliveredOrdersSection');
-            const delivered = orders.filter(o => o.status === 'Delivered' || o.status === 'Completed');
+            const delivered = orders.filter(o => o.status === 'delivered' || o.status === 'completed');
 
             if (delivered.length === 0) {
                 container.innerHTML = `
@@ -947,6 +1191,21 @@
             container.innerHTML = html;
         }
 
+        function buildStatusOptions(selected) {
+            const statuses = [
+                'pending',
+                'payment confirmed',
+                'processing',
+                'completed',
+                'dispatched in 3 days',
+                'on its way',
+                'delivered'
+            ];
+            return statuses.map(status => `
+                <option value="${status}" ${status === selected ? 'selected' : ''}>${status}</option>
+            `).join('');
+        }
+
         function displayOrders(orders) {
             const container = document.getElementById('ordersContainer');
             
@@ -973,6 +1232,8 @@
                             <th>Size</th>
                             <th>Quantity</th>
                             <th>Currency</th>
+                            <th>Payment</th>
+                            <th>Receipt</th>
                             <th>Status</th>
                             <th>Date</th>
                             <th>Action</th>
@@ -983,11 +1244,15 @@
 
             orders.forEach(order => {
                 const date = new Date(order.date).toLocaleDateString();
-                const statusClass = order.status === 'Pending'
-                    ? 'status-pending'
-                    : order.status === 'Delivered'
-                        ? 'status-delivered'
-                        : 'status-completed';
+                const statusClass = 
+                    order.status === 'pending' ? 'status-pending' :
+                    order.status === 'payment confirmed' ? 'status-confirmed' :
+                    order.status === 'processing' ? 'status-processing' :
+                    order.status === 'completed' ? 'status-completed' :
+                    order.status === 'dispatched in 3 days' ? 'status-dispatched' :
+                    order.status === 'on its way' ? 'status-ontheway' :
+                    order.status === 'delivered' ? 'status-delivered' :
+                    'status-completed';
                 
                 html += `
                     <tr>
@@ -1001,10 +1266,15 @@
                         <td>${order.size || 'N/A'}</td>
                         <td>${order.quantity || 1}</td>
                         <td>${order.currency || 'USD'}</td>
+                        <td>${order.payment_method || 'N/A'}</td>
+                        <td>${order.payment_screenshot ? `<a href="${order.payment_screenshot}" target="_blank" style="color:#2980b9; font-weight:700;">View</a>` : 'N/A'}</td>
                         <td><span class="status-badge ${statusClass}">${order.status}</span></td>
                         <td><span class="timestamp">${date}</span></td>
                         <td>
-                            ${order.status === 'Delivered' ? '<span style="color:#27ae60;font-weight:700;">✅ Delivered</span>' : `<button class="approve-btn" onclick="approveOrder(${order.id})">✅ Approve</button>`}
+                            <select id="statusSelect-${order.id}" class="order-status-select">
+                                ${buildStatusOptions(order.status)}
+                            </select>
+                            <button type="button" class="update-status-btn" onclick="updateOrderStatus(${order.id})">Update</button>
                         </td>
                     </tr>
                 `;
@@ -1020,12 +1290,39 @@
 
         function updateStats(orders) {
             const totalOrders = orders.length;
-            const pendingOrders = orders.filter(o => o.status === 'Pending').length;
-            const completedOrders = orders.filter(o => o.status === 'Delivered' || o.status === 'Completed').length;
+            const pendingOrders = orders.filter(o => o.status === 'pending').length;
+            const completedOrders = orders.filter(o => o.status === 'delivered' || o.status === 'completed').length;
 
             document.getElementById('totalOrders').textContent = totalOrders;
             document.getElementById('pendingOrders').textContent = pendingOrders;
             document.getElementById('completedOrders').textContent = completedOrders;
+        }
+
+        function updateOrderStatus(orderId) {
+            const select = document.getElementById(`statusSelect-${orderId}`);
+            if (!select) {
+                alert('Unable to update order status. Please refresh the page and try again.');
+                return;
+            }
+
+            const status = select.value;
+            fetch(`/admin/orders/${orderId}/status`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ status })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert('Error updating order status: ' + data.error);
+                    return;
+                }
+                loadOrders();
+            })
+            .catch(err => {
+                alert('Error updating order status');
+                console.error(err);
+            });
         }
 
         // Approve delivered order
@@ -1033,7 +1330,7 @@
             fetch(`/admin/orders/${orderId}/status`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ status: 'Delivered' })
+                body: JSON.stringify({ status: 'delivered' })
             })
             .then(response => response.json())
             .then(data => {
@@ -1054,7 +1351,7 @@
 
         // Edit Modal Functions
         function openEditModal(productId) {
-            fetch('/api/admin/products')
+            fetch('/api/admin/products?t=' + Date.now())
                 .then(response => response.json())
                 .then(products => {
                     const product = products.find(p => p.id === productId);
@@ -1064,6 +1361,16 @@
                         document.getElementById('editPrice').value = product.price;
                         document.getElementById('editColors').value = product.colors.join(', ');
                         document.getElementById('editSizes').value = product.sizes.join(', ');
+                        
+                        const productPaymentOptions = Array.isArray(product.paymentOptions) ? product.paymentOptions : ['COD', 'PREPAY'];
+                        const editMode = productPaymentOptions.includes('COD') && productPaymentOptions.includes('PREPAY')
+                            ? 'BOTH'
+                            : productPaymentOptions.includes('COD')
+                                ? 'COD'
+                                : productPaymentOptions.includes('PREPAY')
+                                    ? 'PREPAY'
+                                    : 'BOTH';
+                        document.getElementById('editPaymentMode').value = editMode;
                         
                         // Set out of stock status
                         document.getElementById('editOutOfStock').checked = product.outOfStock || false;
@@ -1133,6 +1440,7 @@
             const price = parseFloat(document.getElementById('editPrice').value);
             const colors = document.getElementById('editColors').value.split(',').map(c => c.trim());
             const sizes = document.getElementById('editSizes').value.split(',').map(s => s.trim());
+            const paymentMode = document.getElementById('editPaymentMode').value;
             const outOfStock = document.getElementById('editOutOfStock').checked;
 
             // Build stock object from inputs (only if not out of stock)
@@ -1155,7 +1463,8 @@
                 price,
                 colors,
                 sizes,
-                outOfStock
+                outOfStock,
+                paymentMode
             };
 
             // Only include stock if not out of stock
@@ -1185,7 +1494,7 @@
 
         // Load products when page loads or tab switches
         function loadProducts() {
-            fetch('/api/admin/products')
+            fetch('/api/admin/products?t=' + Date.now())
                 .then(response => response.json())
                 .then(products => {
                     displayProducts(products);
@@ -1195,6 +1504,79 @@
                     document.getElementById('productsContainer').innerHTML = 
                         '<div class="empty-state"><p>❌ Error loading products</p></div>';
                 });
+        }
+
+        function loadUsers() {
+            const container = document.getElementById('usersContainer');
+            container.innerHTML = '<div class="empty-state"><p>Loading users...</p></div>';
+            
+            fetch('/api/admin/users?t=' + Date.now())
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                    }
+                    return response.json();
+                })
+                .then(users => {
+                    console.log('Users loaded:', users);
+                    if (!users) {
+                        throw new Error('No data received');
+                    }
+                    if (!Array.isArray(users)) {
+                        console.warn('Users response is not an array:', users);
+                        users = [];
+                    }
+                    displayUsers(users);
+                })
+                .catch(err => {
+                    console.error('Error loading users:', err);
+                    container.innerHTML = 
+                        `<div class="empty-state"><p>❌ Error loading users: ${err.message}</p></div>`;
+                });
+        }
+
+        function displayUsers(users) {
+            const container = document.getElementById('usersContainer');
+            if (!users || users.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <p>📭 No registered users found.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>User ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Password</th>
+                            <th>Created At</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            users.forEach(user => {
+                html += `
+                    <tr>
+                        <td>${user.id}</td>
+                        <td>${user.name || 'N/A'}</td>
+                        <td>${user.email || 'N/A'}</td>
+                        <td>${user.password || 'N/A'}</td>
+                        <td>${user.createdAt ? new Date(user.createdAt).toLocaleString() : 'N/A'}</td>
+                    </tr>
+                `;
+            });
+
+            html += `
+                    </tbody>
+                </table>
+            `;
+            container.innerHTML = html;
         }
 
         function displayProducts(products) {
@@ -1287,6 +1669,7 @@
                         <div class="product-price">$${product.price.toFixed(2)}</div>
                         <div class="product-status">${statusBadge}</div>
                         ${stockDetails}
+                        <div style="font-size: 0.9rem; color: #555; margin-top: 0.5rem;"><strong>Payment:</strong> ${product.paymentMode || 'COD'}</div>
                         <div class="product-actions">
                             <button class="edit-btn" onclick="openEditModal(${product.id})">✏️ Edit</button>
                             <button class="delete-btn" onclick="deleteProduct(${product.id})">🗑️ Delete</button>
@@ -1303,6 +1686,7 @@
         function addProduct() {
             const name = document.getElementById('newProductName').value;
             const price = document.getElementById('newProductPrice').value;
+            const paymentMode = document.getElementById('newProductPaymentMode').value;
 
             if (!name || !price) {
                 alert('Please fill in all fields');
@@ -1316,7 +1700,8 @@
                 },
                 body: JSON.stringify({
                     name: name,
-                    price: parseFloat(price)
+                    price: parseFloat(price),
+                    paymentMode: paymentMode
                 })
             })
             .then(response => response.json())
@@ -1414,10 +1799,48 @@
             document.getElementById(tabName + '-tab').classList.add('active');
             button.classList.add('active');
 
-            // Load products if products tab is clicked
+            // Load content for the selected tab
             if (tabName === 'products') {
                 loadProducts();
+            } else if (tabName === 'users') {
+                loadUsers();
             }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Load orders since orders tab is active by default
+            loadOrders();
+            // Also load users in background
+            loadUsers();
+            
+            // Refresh data when page becomes visible (user returns to tab)
+            document.addEventListener('visibilitychange', () => {
+                if (!document.hidden) {
+                    console.log('Admin page became visible, refreshing data...');
+                    loadOrders();
+                    loadProducts();
+                    loadUsers();
+                }
+            });
+        });
+
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(registrations => {
+                registrations.forEach(registration => {
+                    if (registration.active && !registration.active.scriptURL.includes('v=')) {
+                        registration.unregister();
+                    }
+                });
+            });
+
+            navigator.serviceWorker.register('/sw.js?v=' + Date.now())
+                .then(registration => {
+                    console.log('Admin service worker registered:', registration.scope);
+                    registration.update();
+                })
+                .catch(error => {
+                    console.warn('Admin service worker registration failed:', error);
+                });
         }
     </script>
     <style>

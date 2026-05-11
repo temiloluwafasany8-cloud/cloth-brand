@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Admin Login | Cloth Brand</title>
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #dfe9f3 100%);
+            color: #2c3e50;
+        }
+        .login-card {
+            width: min(520px, 90%);
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 24px 80px rgba(0,0,0,0.12);
+            text-align: center;
+        }
+        .login-card h1 {
+            margin-bottom: 0.5rem;
+            font-size: 2rem;
+        }
+        .login-card p {
+            margin-bottom: 2rem;
+            color: #556073;
+        }
+        .login-card input {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 12px;
+            border: 1px solid #d7dde6;
+            font-size: 1rem;
+        }
+        .login-card button {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        .login-card button:hover {
+            transform: translateY(-2px);
+        }
+        .notice {
+            background: #fff9e6;
+            border: 1px solid #ffe6a3;
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            color: #7d6000;
+            text-align: left;
+        }
+        .error {
+            margin-top: 1rem;
+            color: #d63031;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <h1>Admin Login</h1>
+        <p>Only the two authorized email addresses can log in here.</p>
+        <div class="notice">
+            Allowed emails:
+            <ul style="margin: 0.75rem 0 0 1.25rem; padding: 0; list-style: disc;">
+                <li>admin@clothbrand.com</li>
+                <li>manager@clothbrand.com</li>
+            </ul>
+        </div>
+        <form id="adminLoginForm">
+            <input type="email" id="adminEmail" placeholder="Admin email" required autocomplete="username">
+            <input type="password" id="adminPassword" placeholder="Password" required autocomplete="current-password">
+            <button type="submit">Sign In</button>
+            <div id="loginError" class="error"></div>
+        </form>
+    </div>
+    <script>
+        const ALLOWED_ADMIN_EMAILS = ['admin@clothbrand.com', 'manager@clothbrand.com'];
+
+        if (localStorage.getItem('adminLoggedIn') === 'true' && ALLOWED_ADMIN_EMAILS.includes((localStorage.getItem('adminEmail') || '').toLowerCase())) {
+            window.location.href = '/admin.html';
+        }
+
+        const loginForm = document.getElementById('adminLoginForm');
+        const loginError = document.getElementById('loginError');
+
+        loginForm.addEventListener('submit', event => {
+            event.preventDefault();
+            const email = document.getElementById('adminEmail').value.trim().toLowerCase();
+            const password = document.getElementById('adminPassword').value.trim();
+
+            if (!ALLOWED_ADMIN_EMAILS.includes(email)) {
+                loginError.textContent = 'Access denied. This admin login only accepts the two allowed addresses.';
+                return;
+            }
+
+            if (!password) {
+                loginError.textContent = 'Password is required.';
+                return;
+            }
+
+            localStorage.setItem('adminEmail', email);
+            localStorage.setItem('adminLoggedIn', 'true');
+            window.location.href = '/admin.html';
+        });
+    </script>
+</body>
+</html>

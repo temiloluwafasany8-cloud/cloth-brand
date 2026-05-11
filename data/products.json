@@ -31,9 +31,9 @@
       },
       "Navy": {
         "Small": 8,
-        "Medium": 12,
+        "Medium": 11,
         "Large": 16,
-        "Extra Large": 6
+        "Extra Large": 5
       },
       "Gray": {
         "Small": 9,
@@ -42,7 +42,11 @@
         "Extra Large": 7
       }
     },
-    "totalStock": 205
+    "totalStock": 203,
+    "outOfStock": false,
+    "paymentOptions": [
+      "PREPAY"
+    ]
   },
   {
     "id": 2,
@@ -63,13 +67,13 @@
     ],
     "stock": {
       "White": {
-        "Small": 20,
+        "Small": 19,
         "Medium": 25,
         "Large": 30,
         "Extra Large": 15
       },
       "Black": {
-        "Small": 18,
+        "Small": 17,
         "Medium": 22,
         "Large": 28,
         "Extra Large": 12
@@ -82,12 +86,17 @@
       },
       "Blue": {
         "Small": 16,
-        "Medium": 21,
+        "Medium": 19,
         "Large": 26,
-        "Extra Large": 11
+        "Extra Large": 10
       }
     },
-    "totalStock": 314
+    "totalStock": 309,
+    "outOfStock": false,
+    "paymentOptions": [
+      "COD",
+      "PREPAY"
+    ]
   },
   {
     "id": 3,
@@ -97,7 +106,8 @@
     "colors": [
       "Light Blue",
       "Dark Blue",
-      "Black"
+      "Black",
+      "orange"
     ],
     "sizes": [
       "Small",
@@ -119,13 +129,24 @@
         "Extra Large": 5
       },
       "Black": {
-        "Small": 7,
+        "Small": 5,
         "Medium": 10,
         "Large": 14,
         "Extra Large": 6
+      },
+      "orange": {
+        "Small": 6,
+        "Medium": 5,
+        "Large": 4,
+        "Extra Large": 4
       }
     },
-    "totalStock": 85
+    "totalStock": 102,
+    "outOfStock": false,
+    "paymentOptions": [
+      "COD",
+      "PREPAY"
+    ]
   },
   {
     "id": 4,
@@ -146,7 +167,7 @@
     ],
     "stock": {
       "Olive": {
-        "Small": 12,
+        "Small": 11,
         "Medium": 16,
         "Large": 20,
         "Extra Large": 8
@@ -170,7 +191,7 @@
         "Extra Large": 7
       }
     },
-    "totalStock": 220
+    "totalStock": 219
   },
   {
     "id": 5,
@@ -236,7 +257,7 @@
     ],
     "stock": {
       "White": {
-        "Small": 18,
+        "Small": 16,
         "Medium": 22,
         "Large": 28,
         "Extra Large": 12
@@ -248,7 +269,7 @@
         "Extra Large": 15
       },
       "Pink": {
-        "Small": 16,
+        "Small": 14,
         "Medium": 20,
         "Large": 26,
         "Extra Large": 10
@@ -260,7 +281,8 @@
         "Extra Large": 11
       }
     },
-    "totalStock": 318
+    "totalStock": 314,
+    "outOfStock": false
   },
   {
     "id": 7,

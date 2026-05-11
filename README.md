@@ -50,6 +50,19 @@ If you want to use the app from another device on your local network, open it wi
 
 You can deploy this app to any host that supports Node.js, such as Render, Railway, Fly.io, or Heroku.
 
+### Railway deployment
+
+1. Connect your GitHub repo to Railway.
+2. Set the start command to:
+   ```bash
+   npm start
+   ```
+3. Make sure `PORT` is defined by Railway (default behavior).
+4. If you want to prevent the server from attempting to open a browser on the host, set:
+   ```bash
+   OPEN_BROWSER=false
+   ```
+
 ### Recommended deployment
 
 1. Connect your GitHub repo.

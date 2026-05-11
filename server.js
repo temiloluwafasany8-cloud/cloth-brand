@@ -260,7 +260,94 @@ app.post('/api/signin', (req, res) => {
     }
 });
 
-// 3. Get all clothes (for the customer to see)
+// 3. Request password reset OTP
+app.post('/api/request-password-reset', (req, res) => {
+    try {
+        const email = req.body.email ? String(req.body.email).trim().toLowerCase() : '';
+
+        if (!email) {
+            return res.status(400).json({ success: false, message: 'Email is required' });
+        }
+
+        if (!emailRegex.test(email)) {
+            return res.status(400).json({ success: false, message: 'Please enter a valid email address' });
+        }
+
+        const users = fs.existsSync(usersFile) ? JSON.parse(fs.readFileSync(usersFile, 'utf8')) : [];
+        const userIndex = users.findIndex(u => u.email.toLowerCase() === email);
+
+        if (userIndex === -1) {
+            return res.status(404).json({ success: false, message: 'No account found with that email' });
+        }
+
+        const otp = Math.floor(100000 + Math.random() * 900000).toString();
+        const expiry = Date.now() + 10 * 60 * 1000; // 10 minutes
+
+        users[userIndex].resetOtp = otp;
+        users[userIndex].resetOtpExpiry = expiry;
+        fs.writeFileSync(usersFile, JSON.stringify(users, null, 2));
+
+        console.log(`Password reset OTP for ${email}: ${otp}`);
+
+        res.json({ success: true, message: 'OTP generated and sent to your email address.', otp });
+    } catch (err) {
+        console.error('Request password reset error:', err);
+        res.status(500).json({ success: false, message: 'Failed to request password reset' });
+    }
+});
+
+// 4. Reset password with OTP
+app.post('/api/reset-password', (req, res) => {
+    try {
+        const email = req.body.email ? String(req.body.email).trim().toLowerCase() : '';
+        const otp = req.body.otp ? String(req.body.otp).trim() : '';
+        const newPassword = req.body.newPassword ? String(req.body.newPassword) : '';
+
+        if (!email || !otp || !newPassword) {
+            return res.status(400).json({ success: false, message: 'Email, OTP, and new password are required' });
+        }
+
+        if (!emailRegex.test(email)) {
+            return res.status(400).json({ success: false, message: 'Please enter a valid email address' });
+        }
+
+        if (newPassword.length < 4) {
+            return res.status(400).json({ success: false, message: 'New password must be at least 4 characters' });
+        }
+
+        const users = fs.existsSync(usersFile) ? JSON.parse(fs.readFileSync(usersFile, 'utf8')) : [];
+        const userIndex = users.findIndex(u => u.email.toLowerCase() === email);
+
+        if (userIndex === -1) {
+            return res.status(404).json({ success: false, message: 'No account found with that email' });
+        }
+
+        const user = users[userIndex];
+        if (!user.resetOtp || !user.resetOtpExpiry) {
+            return res.status(400).json({ success: false, message: 'No OTP request found. Please request a new OTP.' });
+        }
+
+        if (Date.now() > user.resetOtpExpiry) {
+            return res.status(400).json({ success: false, message: 'OTP has expired. Please request a new one.' });
+        }
+
+        if (user.resetOtp !== otp) {
+            return res.status(400).json({ success: false, message: 'Invalid OTP code' });
+        }
+
+        users[userIndex].password = newPassword;
+        delete users[userIndex].resetOtp;
+        delete users[userIndex].resetOtpExpiry;
+        fs.writeFileSync(usersFile, JSON.stringify(users, null, 2));
+
+        res.json({ success: true, message: 'Password reset successfully. You can now sign in.' });
+    } catch (err) {
+        console.error('Reset password error:', err);
+        res.status(500).json({ success: false, message: 'Failed to reset password' });
+    }
+});
+
+// 5. Get all clothes (for the customer to see)
 app.get('/api/clothes', (req, res) => {
     // Prevent caching
     res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
@@ -792,7 +879,7 @@ app.use((req, res, next) => {
 });
 
 const HOST = process.env.HOST || '0.0.0.0';
-const PUBLIC_HOST = 'localhost';
+const PUBLIC_HOST = process.env.PUBLIC_HOST || 'localhost';
 
 // Function to open browser
 function openBrowser(url) {
@@ -887,14 +974,22 @@ if (require.main === module) {
         console.log(`✓ Admin Panel: http://${PUBLIC_HOST}:${PORT}/admin.html`);
         console.log(`\n🚀 Starting your Clothing Brand application...`);
 
-        // Open browser after a short delay to ensure server is ready
-        setTimeout(() => {
-            openBrowser(`http://${PUBLIC_HOST}:${PORT}`);
-            // Also open admin panel after another delay
+        const isAutoOpenAllowed =
+            process.env.OPEN_BROWSER !== 'false' &&
+            !process.env.CI &&
+            !process.env.RAILWAY_ENVIRONMENT &&
+            !process.env.HEROKU;
+
+        if (isAutoOpenAllowed) {
+            // Open browser after a short delay to ensure server is ready
             setTimeout(() => {
-                openBrowser(`http://${PUBLIC_HOST}:${PORT}/admin.html`);
-            }, 1500);
-        }, 1000);
+                openBrowser(`http://${PUBLIC_HOST}:${PORT}`);
+                // Also open admin panel after another delay
+                setTimeout(() => {
+                    openBrowser(`http://${PUBLIC_HOST}:${PORT}/admin.html`);
+                }, 1500);
+            }, 1000);
+        }
     });
 } else {
     module.exports = app;

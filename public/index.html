@@ -1328,13 +1328,21 @@ i cant see my orders in the customer website and i cant see delivered products o
                     <label>Email:</label>
                     <input type="email" id="authEmail" placeholder="Enter your email" required>
                 </div>
-                <div class="form-field">
-                    <label>Password:</label>
+                <div class="form-field" id="passwordField">
+                    <label id="authPasswordLabel">Password:</label>
                     <input type="password" id="authPassword" placeholder="Enter password" required>
+                </div>
+                <div class="form-field" id="otpField" style="display: none;">
+                    <label>OTP Code:</label>
+                    <input type="text" id="authOtp" placeholder="Enter OTP" autocomplete="one-time-code">
                 </div>
                 <div id="authError" class="error-message"></div>
                 <button type="submit" class="auth-btn" id="authBtn">Sign Up</button>
             </form>
+            <div class="auth-links" style="margin-top: 1rem; display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+                <button type="button" id="forgotPasswordLink" class="secondary-btn" onclick="startPasswordReset()" style="display: none;">Forgot password?</button>
+                <button type="button" id="backToSignInLink" class="secondary-btn" onclick="resetToSignIn()" style="display: none;">Back to Sign In</button>
+            </div>
             <div class="toggle-auth">
                 <span id="toggleText">Already have an account?</span>
                 <button onclick="toggleAuthMode()">Sign In</button>
@@ -1573,6 +1581,7 @@ i cant see my orders in the customer website and i cant see delivered products o
 
     <script>
         let isSignup = true;
+        let passwordResetStage = 0; // 0 = normal auth, 1 = request OTP, 2 = reset password
         let currentUser = null;
         let cartItems = [];
         let exchangeRates = {};
@@ -1763,6 +1772,7 @@ i cant see my orders in the customer website and i cant see delivered products o
                 }
             }
             document.getElementById('authModal').style.display = 'flex';
+            updateAuthFormState();
             // Still load exchange rates for currency selector
             loadExchangeRates();
             // Add currency change listener even when not logged in
@@ -1831,25 +1841,99 @@ i cant see my orders in the customer website and i cant see delivered products o
             });
         }
 
-        function toggleAuthMode() {
-            isSignup = !isSignup;
+        function updateAuthFormState() {
             const title = document.getElementById('authTitle');
             const btn = document.getElementById('authBtn');
             const nameField = document.getElementById('nameField');
             const toggleText = document.getElementById('toggleText');
+            const forgotLink = document.getElementById('forgotPasswordLink');
+            const backLink = document.getElementById('backToSignInLink');
+            const otpField = document.getElementById('otpField');
+            const passwordField = document.getElementById('passwordField');
+            const passwordLabel = document.getElementById('authPasswordLabel');
 
-            if (isSignup) {
+            const authPassword = document.getElementById('authPassword');
+            const authOtp = document.getElementById('authOtp');
+
+            if (passwordResetStage === 1) {
+                title.textContent = 'Reset Password';
+                btn.textContent = 'Request OTP';
+                nameField.style.display = 'none';
+                passwordField.style.display = 'none';
+                otpField.style.display = 'none';
+                passwordLabel.textContent = 'New Password:';
+                toggleText.style.display = 'none';
+                forgotLink.style.display = 'none';
+                backLink.style.display = 'block';
+                authPassword.value = '';
+                authPassword.required = false;
+                authPassword.disabled = true;
+                authOtp.value = '';
+                authOtp.required = false;
+                authOtp.disabled = true;
+            } else if (passwordResetStage === 2) {
+                title.textContent = 'Enter OTP & New Password';
+                btn.textContent = 'Reset Password';
+                nameField.style.display = 'none';
+                passwordField.style.display = 'block';
+                otpField.style.display = 'block';
+                passwordLabel.textContent = 'New Password:';
+                toggleText.style.display = 'none';
+                forgotLink.style.display = 'none';
+                backLink.style.display = 'block';
+                authPassword.required = true;
+                authPassword.disabled = false;
+                authOtp.required = true;
+                authOtp.disabled = false;
+            } else if (isSignup) {
                 title.textContent = 'Sign Up';
                 btn.textContent = 'Sign Up';
                 nameField.style.display = 'block';
-                toggleText.textContent = 'Already have an account?';
+                passwordField.style.display = 'block';
+                otpField.style.display = 'none';
+                passwordLabel.textContent = 'Password:';
+                toggleText.style.display = 'inline';
+                forgotLink.style.display = 'none';
+                backLink.style.display = 'none';
+                authPassword.required = true;
+                authPassword.disabled = false;
+                authOtp.required = false;
+                authOtp.disabled = true;
             } else {
                 title.textContent = 'Sign In';
                 btn.textContent = 'Sign In';
                 nameField.style.display = 'none';
-                toggleText.textContent = "Don't have an account?";
+                passwordField.style.display = 'block';
+                otpField.style.display = 'none';
+                passwordLabel.textContent = 'Password:';
+                toggleText.style.display = 'inline';
+                forgotLink.style.display = 'inline-block';
+                backLink.style.display = 'none';
+                authPassword.required = true;
+                authPassword.disabled = false;
+                authOtp.required = false;
+                authOtp.disabled = true;
             }
+
             document.getElementById('authError').textContent = '';
+        }
+
+        function toggleAuthMode() {
+            passwordResetStage = 0;
+            isSignup = !isSignup;
+            updateAuthFormState();
+        }
+
+        function startPasswordReset() {
+            passwordResetStage = 1;
+            isSignup = false;
+            updateAuthFormState();
+        }
+
+        function resetToSignIn() {
+            passwordResetStage = 0;
+            isSignup = false;
+            updateAuthFormState();
         }
 
         function handleAuth(event) {
@@ -1857,17 +1941,99 @@ i cant see my orders in the customer website and i cant see delivered products o
             const email = document.getElementById('authEmail').value.trim();
             const password = document.getElementById('authPassword').value;
             const name = document.getElementById('authName').value.trim();
+            const otp = document.getElementById('authOtp').value.trim();
             const errorDiv = document.getElementById('authError');
             errorDiv.textContent = '';
 
-            // Validate email format
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) {
                 errorDiv.textContent = 'Please enter a valid email address';
                 return;
             }
 
-            // Validate password length
+            if (passwordResetStage === 1) {
+                const endpoint = '/api/request-password-reset';
+                const authBtn = document.getElementById('authBtn');
+                const originalText = authBtn.textContent;
+                authBtn.disabled = true;
+                authBtn.textContent = 'Requesting...';
+
+                fetch(endpoint, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email })
+                })
+                .then(response => response.json().then(data => ({ status: response.status, ok: response.ok, data })))
+                .then(({ status, ok, data }) => {
+                    if (!ok) {
+                        const message = data && data.message ? data.message : `Server error: ${status}`;
+                        throw new Error(message);
+                    }
+                    if (data.success) {
+                        passwordResetStage = 2;
+                        updateAuthFormState();
+                        errorDiv.textContent = `${data.message} ${data.otp ? 'Your OTP: ' + data.otp : ''}`;
+                    } else {
+                        throw new Error(data.message || 'Failed to request OTP');
+                    }
+                })
+                .catch(err => {
+                    errorDiv.textContent = err.message || 'Connection error';
+                    console.error(err);
+                })
+                .finally(() => {
+                    authBtn.disabled = false;
+                    authBtn.textContent = originalText;
+                });
+                return;
+            }
+
+            if (passwordResetStage === 2) {
+                if (!otp) {
+                    errorDiv.textContent = 'Please enter the OTP sent to your email.';
+                    return;
+                }
+                if (password.length < 4) {
+                    errorDiv.textContent = 'New password must be at least 4 characters';
+                    return;
+                }
+
+                const endpoint = '/api/reset-password';
+                const authBtn = document.getElementById('authBtn');
+                const originalText = authBtn.textContent;
+                authBtn.disabled = true;
+                authBtn.textContent = 'Resetting...';
+
+                fetch(endpoint, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, otp, newPassword: password })
+                })
+                .then(response => response.json().then(data => ({ status: response.status, ok: response.ok, data })))
+                .then(({ status, ok, data }) => {
+                    if (!ok) {
+                        const message = data && data.message ? data.message : `Server error: ${status}`;
+                        throw new Error(message);
+                    }
+                    if (data.success) {
+                        errorDiv.textContent = data.message;
+                        resetToSignIn();
+                    } else {
+                        throw new Error(data.message || 'Failed to reset password');
+                    }
+                })
+                .catch(err => {
+                    errorDiv.textContent = err.message || 'Connection error';
+                    console.error(err);
+                })
+                .finally(() => {
+                    authBtn.disabled = false;
+                    authBtn.textContent = originalText;
+                });
+                return;
+            }
+
+            // Normal signup / signin flow
             if (password.length < 4) {
                 errorDiv.textContent = 'Password must be at least 4 characters';
                 return;
@@ -2847,24 +3013,28 @@ i cant see my orders in the customer website and i cant see delivered products o
     <div id="chatbot-widget" class="chatbot-widget">
         <div class="chatbot-toggle" onclick="toggleChatbot()">
             <span class="chatbot-icon">💬</span>
-            <span class="chatbot-badge">Chat</span>
         </div>
         <div class="chatbot-container" id="chatbot-container">
             <div class="chatbot-header">
-                <h3>AI Assistant</h3>
-                <span class="chatbot-close" onclick="toggleChatbot()">×</span>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 18px;">🤖</span>
+                    <div>
+                        <h3 style="margin: 0; font-size: 16px; font-weight: 700;">Support Assistant</h3>
+                        <p style="margin: 2px 0 0; font-size: 12px; opacity: 0.9;">Online</p>
+                    </div>
+                </div>
+                <span class="chatbot-close" onclick="toggleChatbot()" style="font-size: 28px; cursor: pointer; opacity: 0.7;">×</span>
             </div>
             <div class="chatbot-messages" id="chatbot-messages">
                 <div class="message bot-message">
                     <div class="message-content">
-                        👋 Hi! I'm your AI assistant. How can I help you today?
-                        <br><small>Ask me about products, orders, or anything else!</small>
+                        Hi there! 👋 Welcome to our support team. How can I assist you today?
                     </div>
                 </div>
             </div>
             <div class="chatbot-input">
-                <input type="text" id="chatbot-input" placeholder="Type your message..." onkeypress="handleChatbotKeyPress(event)">
-                <button onclick="sendChatbotMessage()">Send</button>
+                <input type="text" id="chatbot-input" placeholder="Ask me anything..." onkeypress="handleChatbotKeyPress(event)">
+                <button onclick="sendChatbotMessage()" style="padding: 8px 16px; font-size: 13px;">Send</button>
             </div>
         </div>
     </div>
@@ -2880,80 +3050,117 @@ i cant see my orders in the customer website and i cant see delivered products o
         }
 
         .chatbot-toggle {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
+            transition: all 0.3s ease;
+            border: 2px solid white;
         }
 
         .chatbot-toggle:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
+            transform: scale(1.08);
+            box-shadow: 0 6px 24px rgba(59, 130, 246, 0.4);
         }
 
         .chatbot-icon {
             font-size: 24px;
-            color: white;
         }
 
         .chatbot-container {
             position: absolute;
             bottom: 80px;
             right: 0;
-            width: 350px;
-            height: 500px;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            width: 360px;
+            height: 520px;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 5px 40px rgba(0, 0, 0, 0.16);
             display: none;
             flex-direction: column;
             overflow: hidden;
+            border: 1px solid #e5e7eb;
         }
 
         .chatbot-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
             color: white;
-            padding: 15px 20px;
+            padding: 16px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-bottom: none;
         }
 
         .chatbot-header h3 {
             margin: 0;
-            font-size: 18px;
+            font-size: 15px;
+            font-weight: 600;
         }
 
         .chatbot-close {
             cursor: pointer;
             font-size: 24px;
-            font-weight: bold;
+            font-weight: 300;
+            transition: opacity 0.2s;
+        }
+
+        .chatbot-close:hover {
+            opacity: 0.6;
         }
 
         .chatbot-messages {
             flex: 1;
-            padding: 15px;
+            padding: 16px;
             overflow-y: auto;
-            background: linear-gradient(135deg, #f9fafb 0%, #f5f7fa 100%);
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .chatbot-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chatbot-messages::-webkit-scrollbar-track {
+            background: #f3f4f6;
+        }
+
+        .chatbot-messages::-webkit-scrollbar-thumb {
+            background: #d1d5db;
+            border-radius: 3px;
         }
 
         .message {
-            margin-bottom: 15px;
             display: flex;
+            margin-bottom: 4px;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .message-content {
-            max-width: 80%;
-            padding: 10px 15px;
-            border-radius: 18px;
-            font-size: 14px;
-            line-height: 1.4;
+            max-width: 75%;
+            padding: 10px 14px;
+            border-radius: 14px;
+            font-size: 13px;
+            line-height: 1.5;
+            word-wrap: break-word;
         }
 
         .bot-message {
@@ -2961,9 +3168,9 @@ i cant see my orders in the customer website and i cant see delivered products o
         }
 
         .bot-message .message-content {
-            background: white;
-            color: #333;
-            border: 1px solid #e9ecef;
+            background: #f3f4f6;
+            color: #1f2937;
+            border-radius: 14px 14px 14px 4px;
         }
 
         .user-message {
@@ -2971,45 +3178,60 @@ i cant see my orders in the customer website and i cant see delivered products o
         }
 
         .user-message .message-content {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
             color: white;
+            border-radius: 14px 14px 4px 14px;
         }
 
         .chatbot-input {
-            padding: 15px;
+            padding: 12px 16px;
             background: white;
-            border-top: 1px solid #e9ecef;
+            border-top: 1px solid #f3f4f6;
             display: flex;
-            gap: 10px;
+            gap: 8px;
+            align-items: center;
         }
 
         .chatbot-input input {
             flex: 1;
-            padding: 10px 15px;
-            border: 1px solid #ddd;
-            border-radius: 25px;
+            padding: 10px 14px;
+            border: 1px solid #e5e7eb;
+            border-radius: 20px;
             outline: none;
-            font-size: 14px;
+            font-size: 13px;
+            background: #f9fafb;
+            transition: all 0.2s;
+        }
+
+        .chatbot-input input::placeholder {
+            color: #9ca3af;
         }
 
         .chatbot-input input:focus {
-            border-color: #667eea;
+            border-color: #3b82f6;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
         }
 
         .chatbot-input button {
-            padding: 10px 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
             color: white;
             border: none;
-            border-radius: 25px;
+            border-radius: 20px;
             cursor: pointer;
-            font-weight: 800;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 600;
+            transition: all 0.2s;
+            flex-shrink: 0;
         }
 
         .chatbot-input button:hover {
             transform: translateY(-1px);
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+        }
+
+        .chatbot-input button:active {
+            transform: translateY(0);
         }
 
         @media (max-width: 480px) {
